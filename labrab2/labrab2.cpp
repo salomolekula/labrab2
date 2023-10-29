@@ -6,13 +6,15 @@
 #include <chrono>
 #include <random>
 #include <algorithm>
+#include <Windows.h>
+#include <locale.h>
 
-void firstWay(std::vector<int> vctCount, std::vector<std::string> vctName);
-void secondWay(std::vector<int> vctCount, std::vector<std::string> vctName);
-void thirdWay(std::vector<int> vctCount, std::vector<std::string> vctName);
+void firstWay(std::vector<int>& vctCount, std::vector<std::string>& vctName);
+void secondWay(std::vector<int>& vctCount, std::vector<std::string>& vctName);
+void thirdWay(std::vector<int>& vctCount, std::vector<std::string>& vctName);
 void range_based_for_loop(std::vector<int> vctCount, std::vector<std::string> vctName);
-void iteraionMethod(std::vector<int> vctCount, std::vector<std::string> vctName);
-void indexMethod(std::vector<int> vctCount, std::vector<std::string> vctName, int count);
+void iteraionMethod(std::vector<int>& vctCount, std::vector<std::string>& vctName);
+void indexMethod(std::vector<int> vctCount, std::vector<std::string> vctName);
 void matstat(std::vector<int> vctCount, std::vector<std::string> vctName);
 void middle(std::vector<int> vctCount);
 void median(std::vector<int> vctCount);
@@ -22,10 +24,13 @@ void mode(std::vector<int> vctCount, std::vector<std::string> vctName);
 
 int main()
 {
-	setlocale(0, "");
+	setlocale(LC_ALL, "rus");     // Изменение кодировки программы
+	SetConsoleOutputCP(1251);     // Изменение кодировки консоли
+	SetConsoleCP(1251);
+	system("chcp 1251");
 	std::vector<int> vctCount;
 	std::vector<std::string> vctName;
-	//recursionLink: - ссылка дл рекурсии, насчёт которой передумал
+	//recursionLink: - ссылка для рекурсии, насчёт которой передумал
 	std::cout << "Выберете, какое действие совершить:\n 1) Демонстрационный анализ на дефолтных входных значениях(введите 1)\n 2) Анализ на случайных входных значениях(введите 2) \n 3)Анализ на входных значениях от самого пользователя(введите 3)";
 	int n;
 	std::cin >> n;
@@ -55,9 +60,11 @@ int main()
 	std::cout << "Желаете добавть или убрать студента? Добаить - 1, убрать - 0. В ином случае введите любоё другой знак." << std::endl;
 	int upply;
 	std::cin >> upply;
-	switch (upply)
+
+	if (upply == 1)
 	{
-	case 1:
+
+
 
 		std::cout << "Сначала введите имя студента, затем его баллы" << std::endl;
 		int newCount;
@@ -66,19 +73,19 @@ int main()
 		vctName.push_back(newName);
 		vctCount.push_back(newCount);
 		//чтобы создать рекурсию, хотел обратиться к оператору goto. Передумал :)
-		break;
-	case 2:
+	}
+	else if (upply == 0) {
+
 
 		std::cout << "Введите номер студента для удаления" << std::endl;
 		int numberStud;
 		std::cin >> numberStud;
 		vctCount.erase(vctCount.begin() + numberStud - 1);
 		vctName.erase(vctName.begin() + numberStud - 1);//учитываем, что в журналах список начинается с 1, а не с 0
-		break;
-	default:
+	}
+	else{
 
 		std::cout << "Key is undefined" << "\n";
-		break;
 	}
 
 	
@@ -90,13 +97,13 @@ int main()
 	}
 
 //------------------------------------------------------------------------------ наполнение
-void firstWay(std::vector<int> vctCount, std::vector<std::string> vctName)
+void firstWay(std::vector<int>& vctCount, std::vector<std::string>& vctName)
 {
 	vctName = {"Тимур", "София", "Глеб", "Миша", "Надира", "Юн ХИ", "Арина", "Анна", "Гоша", "Виктор"};
 	vctCount = {70, 69, 90, 89, 75, 60, 78, 70, 96, 51};
 }
 
-void secondWay(std::vector<int> vctCount, std::vector<std::string> vctName)
+void secondWay(std::vector<int>& vctCount, std::vector<std::string>& vctName)
 {
 	srand(time(NULL));
 
@@ -111,7 +118,7 @@ void secondWay(std::vector<int> vctCount, std::vector<std::string> vctName)
 	}
 }
 
-void thirdWay(std::vector<int> vctCount, std::vector<std::string> vctName)
+void thirdWay(std::vector<int>& vctCount, std::vector<std::string>& vctName)
 {
 	int count;
 	std::cout << "Введите количество студентов:";
@@ -134,23 +141,23 @@ void thirdWay(std::vector<int> vctCount, std::vector<std::string> vctName)
 void range_based_for_loop(std::vector<int> vctCount, std::vector<std::string> vctName)
 {
 	for (const auto& i : vctName) {
-		std::printf("%s.12 \n", i);
+		std::cout << i << "\t";
 	}
 	for (const auto& i : vctCount) {
-		std::printf("%i.12 \n", i);
+		std::cout << i << "\t";
 	}
 }
 
-void iteraionMethod(std::vector<int> vctCount, std::vector<std::string> vctName)
+void iteraionMethod(std::vector<int>& vctCount, std::vector<std::string>& vctName)
 {
 	for (auto iterName{ vctName.begin() }; iterName != vctName.end(); iterName++)
 	{
-		std::printf("%s.12 \n", *iterName);
+		std::cout << *iterName << "\t";
 	}
 
 	for (auto iterCount{ vctCount.begin() }; iterCount != vctCount.end(); iterCount++)
 	{
-		std::printf("%i.12 \n", *iterCount);
+		std::cout << *iterCount << "\t";
 	}
 }
 
@@ -186,7 +193,7 @@ void median(std::vector<int> vctCount)
 {
 	std::sort(vctCount.begin(), vctCount.end());//сортировка в одну строку
 
-	int midNum = vctCount.size() / 2;
+	const int midNum = vctCount.size() / 2;
 
 	if (!(vctCount.size() % 2))
 	{
@@ -196,7 +203,6 @@ void median(std::vector<int> vctCount)
 	{
 		std::cout << "Медиана - " << (vctCount[midNum] + vctCount[midNum + 1]) / 2;
 	}
-
 }
 
 void mode(std::vector<int> vctCount, std::vector<std::string> vctName)
@@ -205,7 +211,8 @@ void mode(std::vector<int> vctCount, std::vector<std::string> vctName)
 	int mode = number;
 
 	const int length = vctCount.size();
-	int index[length];
+	std::vector<int> index;
+	for (int i = 0; i < length; i++) index.push_back(0);
 
 	
 
@@ -228,34 +235,56 @@ void mode(std::vector<int> vctCount, std::vector<std::string> vctName)
 
 	for (int i = 0; i < length; i++)
 	{
-		if (index[i] == mode)
+		if (vctCount[i] == mode)
 		{
 			std::cout << vctName[i] << "\t";
 		}
 	}
 }
 
-std::vector<int> vctSorting( std::vector<int> vctCount )
+void cocktailSort(std::vector<int>& input)
 {
-	//сортировка подсчётом(много элементов, но сортировка интересная)
-	//Можно пропустить пункты с нахождением маскимального и минимального элементов, т.к. они уже известны - 0 и 100
+	// флаг перестановки двух элементов
+	bool swapped = true;
+	// счетчик начальной позиции
+	int start = 0;
+	// счетчик конечной позиции
+	int end = input.size() - 1;
 
-	std::vector<int> countSort;// конечный отсортированный вектор
-	int forSorting[99] = { 0 }; // массив, который будет содержать количество значений каждого балла
-	for (int i = 0; i < 100; i++)
-	{
-		for (int j = 0; j < 100; j++) //два цикла для прохода по первоначальному массиву и подсчёту колисества каждого элемента
-		{
-			if (i == vctCount[j]) forSorting[i]++;// запись количества каждого элемента
-		}
-	}
-	for (int i = 0; i < 100; i++)// проход по сортировочному циклу
-	{
-		for(int j = 0; j < forSorting[i]; j++)// цикл показывает количество значений каждого i
-		{
-			countSort.push_back(i);// добавлем в конец с наименьшего элемента, откуда получаем отсортированный список.
-		}
-	}
+	// цикл работает, пока мы можем переставлять элементы в векторе
+	while (swapped) {
+		// сбрасываем флаг при начале цикла, так как он может быть true после предыдущей итерации
+		swapped = false;
 
-	return countSort;
+		// проходим циклом слева направо, как в пузырьковой сортировке
+		for (int i = start; i < end; ++i) {
+			// если текущий элемент больше следующего
+			if (input[i] > input[i + 1]) {
+				// переставляем элементы
+				std::swap(input[i], input[i + 1]);
+				// и поднимаем флаг
+				swapped = true;
+			}
+		}
+		// если ни один элемент не был переставлен - вектор отсортирован
+		if (!swapped)
+			// без комментариев
+			break;
+		// иначе сбрасываем флаг и переходим к следующему этапу
+		swapped = false;
+		// сдвигаем указатель конца на один влево, так как самый правый элемент уже на месте
+		--end;
+		// ещё одна пузырьковая сортировка, но уже справа налево
+		for (int i = end - 1; i >= start; --i) {
+			// если текущий элемент больше следующего
+			if (input[i] > input[i + 1]) {
+				// переставляем элементы
+				std::swap(input[i], input[i + 1]);
+				// и поднимаем флаг
+				swapped = true;
+			}
+		}
+		// сдвигаем указатель начала на один вправо, так как самый левый элемент уже на месте
+		++start;
+	}
 }
